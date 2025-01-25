@@ -5,6 +5,7 @@ CXXFLAGS = -g
 # プロジェクトのディレクトリ構造
 PROJECT_ROOT = .
 SRC_ROOT = src
+INCLUDES = -Iinclude
 
 # ソースファイルの自動検出
 # $(shell)関数は後述のターミナルコマンドを直接叩けます
@@ -29,7 +30,7 @@ $(TARGET): $(OBJ)
 
 # オブジェクトファイルの生成ルール
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@ $(INCLUDES)
 
 # クリーンアップ
 clean:
