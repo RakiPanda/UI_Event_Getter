@@ -2,8 +2,17 @@
 CXX = g++
 CXXFLAGS = -g
 
+# プロジェクトのディレクトリ構造
+PROJECT_ROOT = .
+SRC_ROOT = src
+
 # ソースファイルの自動検出
-SRC = $(wildcard *.cpp)
+# $(shell)関数は後述のターミナルコマンドを直接叩けます
+# findコマンドでsrcフォルダ内のファイルを検索
+# -typeフラグにfを指定するとファイルのみ検索対象にします
+# -nameは検索したいファイル名で、*.cppとあるので拡張子がcppなファイルのみ全検索しています
+SRC_DIR = $(PROJECT_ROOT)/$(SRC_ROOT)
+SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
 
 # オブジェクトファイルのリストを生成
 OBJ = $(SRC:.cpp=.o)
