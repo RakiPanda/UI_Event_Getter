@@ -40,8 +40,8 @@ LRESULT CALLBACK MouseLogger::MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
         // ログファイルに座標を記録
         if (logFile.is_open()) {
             auto now = std::chrono::steady_clock::now(); // 追加
-            auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count(); // 追加
-            logFile << "Mouse Position: (" << x << ", " << y << "), Elapsed Time: " << elapsed << " seconds" << std::endl; // 変更
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count(); // 変更
+            logFile << "Mouse Position: (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms" << std::endl; // 変更
         }
     }
     return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
