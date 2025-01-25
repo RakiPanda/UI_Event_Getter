@@ -7,6 +7,8 @@ HHOOK MouseLogger::hMouseHook = NULL;
 
 // ログファイル
 // ./UI_logsにtxtファイルを作成
+
+// ./UI_logsが存在しない場合はエラーが発生する
 std::ofstream logFile("./UI_logs/mouse_log.txt");
 
 // コンストラクタ
