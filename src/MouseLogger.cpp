@@ -3,13 +3,13 @@
 #include <fstream>
 #include <filesystem> // 追加
 #include <chrono> // 追加
+#include <iomanip> // 追加
+#include <sstream> // 追加
 
 // フックハンドルの初期化
 HHOOK MouseLogger::hMouseHook = NULL;
 
 // ログファイル
-// ./UI_logsにtxtファイルを作成
-
 std::ofstream logFile;
 std::chrono::time_point<std::chrono::steady_clock> startTime; // 追加
 
@@ -17,7 +17,15 @@ std::chrono::time_point<std::chrono::steady_clock> startTime; // 追加
 MouseLogger::MouseLogger() {
     // ./UI_logsが存在しない場合はエラーが発生する
     std::filesystem::create_directories("./UI_logs"); // フォルダを生成
-    logFile.open("./UI_logs/mouse_log.txt");
+
+    // 現在の日時を取得してファイル名に追加
+    auto now = std::chrono::system_clock::now();
+    auto in_time_t = std::chrono::system_clock::to_time_t(now);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d_%H-%M-%S");
+    std::string filename = "./UI_logs/mouse_log_" + ss.str() + ".txt";
+
+    logFile.open(filename);
     startTime = std::chrono::steady_clock::now(); // 追加
 }
 
