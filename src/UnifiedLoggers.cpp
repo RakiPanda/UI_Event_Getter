@@ -15,7 +15,7 @@ UnifiedLoggers::UnifiedLoggers() {
     auto in_time_t = std::chrono::system_clock::to_time_t(now);
     std::stringstream ss;
     ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d_%H-%M-%S");
-    std::string filename = "./UI_logs/mouse_log_" + ss.str() + ".txt";
+    std::string filename = "./UI_logs/" + ss.str() + ".txt";
 
     logFile.open(filename);
     startTime = std::chrono::steady_clock::now();
