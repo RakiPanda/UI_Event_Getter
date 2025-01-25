@@ -1,10 +1,10 @@
 #include <iostream>
 #include <thread>
-#include "MousePositionLogger.h"
+#include "UnifiedMouseLogger.h"
 
 int main() {
-    // MousePositionLoggerインスタンスを作成
-    MousePositionLogger logger;
+    // UnifiedMouseLoggerインスタンスを作成
+    UnifiedMouseLogger logger;
 
     // フックを実行するスレッドを開始
     std::thread hookThread([&logger]() {
