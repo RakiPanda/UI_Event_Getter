@@ -9,7 +9,7 @@ SRC = $(wildcard *.cpp)
 OBJ = $(SRC:.cpp=.o)
 
 # 実行ファイル名
-TARGET = hello_world
+TARGET = UI_Evnet_Getter
 
 # デフォルトのターゲット
 all: $(TARGET)
