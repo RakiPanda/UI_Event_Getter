@@ -50,6 +50,9 @@ LRESULT CALLBACK MousePositionLogger::MouseProc(int nCode, WPARAM wParam, LPARAM
         } else if (wParam == WM_LBUTTONDOWN || wParam == WM_RBUTTONDOWN) {
             std::string button = (wParam == WM_LBUTTONDOWN) ? "Left" : "Right";
             logStream << "Mouse Click: " << button << " Button at (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms";
+        } else if (wParam == WM_MOUSEWHEEL) {
+            int delta = GET_WHEEL_DELTA_WPARAM(pMouse->mouseData);
+            logStream << "Mouse Wheel: Delta " << delta << " at (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms";
         }
 
         if (!logStream.str().empty()) {
