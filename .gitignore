@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+#UI_logsフォルダないは修正を無視
+UI_logs/
