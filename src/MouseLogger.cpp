@@ -42,14 +42,20 @@ LRESULT CALLBACK MouseLogger::MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
         int x = pMouse->pt.x;
         int y = pMouse->pt.y;
 
+        // 経過時間を取得
+        auto now = std::chrono::steady_clock::now(); // 追加
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count(); // 変更
+
+        // ログ内容を生成
+        std::stringstream logStream;
+        logStream << "Mouse Position: (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms";
+
         // 標準出力に座標を表示
-        std::cout << "Mouse Position: (" << x << ", " << y << ")" << std::endl;
+        std::cout << logStream.str() << std::endl;
 
         // ログファイルに座標を記録
         if (logFile.is_open()) {
-            auto now = std::chrono::steady_clock::now(); // 追加
-            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count(); // 変更
-            logFile << "Mouse Position: (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms" << std::endl; // 変更
+            logFile << logStream.str() << std::endl;
         }
     }
     return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
