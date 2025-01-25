@@ -1,14 +1,14 @@
-#ifndef UNIFIED_MOUSE_LOGGER_H
-#define UNIFIED_MOUSE_LOGGER_H
+#ifndef UNIFIED_LOGGERS_H
+#define UNIFIED_LOGGERS_H
 
 #include <windows.h>
 #include <fstream>
 #include <chrono>
 
-class UnifiedMouseLogger {
+class UnifiedLoggers {
 public:
-    UnifiedMouseLogger();
-    ~UnifiedMouseLogger();
+    UnifiedLoggers();
+    ~UnifiedLoggers();
     void Start();
     void Stop();
 
@@ -19,4 +19,4 @@ private:
     static std::chrono::time_point<std::chrono::steady_clock> startTime;
 };
 
-#endif // UNIFIED_MOUSE_LOGGER_H
+#endif // UNIFIED_LOGGERS_H

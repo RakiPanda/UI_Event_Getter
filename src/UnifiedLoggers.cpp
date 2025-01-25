@@ -1,14 +1,14 @@
-#include "UnifiedMouseLogger.h"
+#include "UnifiedLoggers.h"
 #include <iostream>
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
 
-HHOOK UnifiedMouseLogger::hMouseHook = NULL;
-std::ofstream UnifiedMouseLogger::logFile;
-std::chrono::time_point<std::chrono::steady_clock> UnifiedMouseLogger::startTime;
+HHOOK UnifiedLoggers::hMouseHook = NULL;
+std::ofstream UnifiedLoggers::logFile;
+std::chrono::time_point<std::chrono::steady_clock> UnifiedLoggers::startTime;
 
-UnifiedMouseLogger::UnifiedMouseLogger() {
+UnifiedLoggers::UnifiedLoggers() {
     std::filesystem::create_directories("./UI_logs");
 
     auto now = std::chrono::system_clock::now();
@@ -21,11 +21,11 @@ UnifiedMouseLogger::UnifiedMouseLogger() {
     startTime = std::chrono::steady_clock::now();
 }
 
-UnifiedMouseLogger::~UnifiedMouseLogger() {
+UnifiedLoggers::~UnifiedLoggers() {
     Stop();
 }
 
-LRESULT CALLBACK UnifiedMouseLogger::MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK UnifiedLoggers::MouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION) {
         MSLLHOOKSTRUCT* pMouse = (MSLLHOOKSTRUCT*)lParam;
 
@@ -57,7 +57,7 @@ LRESULT CALLBACK UnifiedMouseLogger::MouseProc(int nCode, WPARAM wParam, LPARAM 
     return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
 }
 
-void UnifiedMouseLogger::Start() {
+void UnifiedLoggers::Start() {
     hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseProc, NULL, 0);
     if (hMouseHook == NULL) {
         std::cerr << "Failed to install mouse hook!" << std::endl;
@@ -71,7 +71,7 @@ void UnifiedMouseLogger::Start() {
     }
 }
 
-void UnifiedMouseLogger::Stop() {
+void UnifiedLoggers::Stop() {
     if (hMouseHook) {
         UnhookWindowsHookEx(hMouseHook);
         hMouseHook = NULL;
