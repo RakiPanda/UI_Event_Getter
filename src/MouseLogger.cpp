@@ -1,6 +1,7 @@
 #include "MouseLogger.h"
 #include <iostream>
 #include <fstream>
+#include <filesystem> // 追加
 
 // フックハンドルの初期化
 HHOOK MouseLogger::hMouseHook = NULL;
@@ -8,13 +9,16 @@ HHOOK MouseLogger::hMouseHook = NULL;
 // ログファイル
 // ./UI_logsにtxtファイルを作成
 
-// ./UI_logsが存在しない場合はエラーが発生する
-std::ofstream logFile("./UI_logs/mouse_log.txt");
+std::ofstream logFile;
 
 // コンストラクタ
 MouseLogger::MouseLogger() {}
 
-// デストラクタ
+MouseLogger::MouseLogger() {
+    // ./UI_logsが存在しない場合はエラーが発生する
+    std::filesystem::create_directories("./UI_logs"); // フォルダを生成
+    logFile.open("./UI_logs/mouse_log.txt");
+}
 MouseLogger::~MouseLogger() {
     Stop();
 }
