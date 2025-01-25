@@ -6,7 +6,8 @@
 HHOOK MouseLogger::hMouseHook = NULL;
 
 // ログファイル
-std::ofstream logFile("mouse_coordinates_log.txt");
+// ./UI_logsにtxtファイルを作成
+std::ofstream logFile("./UI_logs/mouse_log.txt");
 
 // コンストラクタ
 MouseLogger::MouseLogger() {}
