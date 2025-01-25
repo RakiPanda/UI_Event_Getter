@@ -13,7 +13,7 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "preLaunchTask": "C/C++: g++ build with makefile",
-            "miDebuggerPath": "/usr/bin/gdb"
+            "miDebuggerPath": "C:\\Program Files (x86)\\mingw64\\bin\\gdb.exe"
         }       
     ]
 }
