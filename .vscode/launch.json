@@ -1,31 +1,19 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "C/C++: g++.exe アクティブ ファイルのビルドとデバッグ",
+            "name": "C/C++: g++ build and debug with Makefile",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "program": "${workspaceFolder}/hello_world",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Program Files (x86)\\mingw64\\bin\\gdb.exe",
-            "setupCommands": [
-                {
-                    "description": "gdb の再フォーマットを有効にする",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description": "逆アセンブリ フレーバーを Intel に設定",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ],
-            "preLaunchTask": "C/C++: g++.exe アクティブなファイルのビルド"
-        }
-    ],
-    "version": "2.0.0"
+            "preLaunchTask": "C/C++: g++ build with makefile",
+            "miDebuggerPath": "/usr/bin/gdb"
+        }       
+    ]
 }
