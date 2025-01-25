@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem> // 追加
+#include <chrono> // 追加
 
 // フックハンドルの初期化
 HHOOK MouseLogger::hMouseHook = NULL;
@@ -10,15 +11,16 @@ HHOOK MouseLogger::hMouseHook = NULL;
 // ./UI_logsにtxtファイルを作成
 
 std::ofstream logFile;
+std::chrono::time_point<std::chrono::steady_clock> startTime; // 追加
 
 // コンストラクタ
-MouseLogger::MouseLogger() {}
-
 MouseLogger::MouseLogger() {
     // ./UI_logsが存在しない場合はエラーが発生する
     std::filesystem::create_directories("./UI_logs"); // フォルダを生成
     logFile.open("./UI_logs/mouse_log.txt");
+    startTime = std::chrono::steady_clock::now(); // 追加
 }
+
 MouseLogger::~MouseLogger() {
     Stop();
 }
@@ -37,7 +39,9 @@ LRESULT CALLBACK MouseLogger::MouseProc(int nCode, WPARAM wParam, LPARAM lParam)
 
         // ログファイルに座標を記録
         if (logFile.is_open()) {
-            logFile << "Mouse Position: (" << x << ", " << y << ")" << std::endl;
+            auto now = std::chrono::steady_clock::now(); // 追加
+            auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - startTime).count(); // 追加
+            logFile << "Mouse Position: (" << x << ", " << y << "), Elapsed Time: " << elapsed << " seconds" << std::endl; // 変更
         }
     }
     return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
