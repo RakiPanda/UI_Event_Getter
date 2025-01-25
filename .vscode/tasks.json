@@ -1,0 +1,17 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C/C++: g++ build with makefile",
+            "command": "make",
+            "args": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Runs the Makefile to build the project.",
+            "problemMatcher": "$gcc"
+        }
+    ],
+    "version": "2.0.0"
+}

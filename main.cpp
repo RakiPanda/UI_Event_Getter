@@ -1,6 +1,6 @@
-#include "HelloWorld.h"
+#include "helloworld.h"
 
-int main(){
-    HelloWorld();
+int main() {
+    printHelloWorld();
     return 0;
 }
