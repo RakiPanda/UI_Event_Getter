@@ -19,7 +19,7 @@ SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
 OBJ = $(SRC:.cpp=.o)
 
 # 実行ファイル名
-TARGET = UI_Evnet_Getter
+TARGET = UI_Event_Getter
 
 # デフォルトのターゲット
 all: $(TARGET)
