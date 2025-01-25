@@ -8,12 +8,10 @@ SRC_ROOT = src
 INCLUDES = -Iinclude
 
 # ソースファイルの自動検出
-# $(shell)関数は後述のターミナルコマンドを直接叩けます
-# findコマンドでsrcフォルダ内のファイルを検索
-# -typeフラグにfを指定するとファイルのみ検索対象にします
-# -nameは検索したいファイル名で、*.cppとあるので拡張子がcppなファイルのみ全検索しています
 SRC_DIR = $(PROJECT_ROOT)/$(SRC_ROOT)
-SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
+# SRC = $(shell find $(SRC_DIR) -type f -name "*.cpp")
+# $(shell)関数はwindowsでは使えないので、wildcard関数を使う
+SRC = $(wildcard $(SRC_ROOT)/*.cpp)
 
 # オブジェクトファイルのリストを生成
 OBJ = $(SRC:.cpp=.o)
