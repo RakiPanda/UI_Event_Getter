@@ -32,5 +32,4 @@
 *.app
 
 # UI_logsフォルダないは修正を無視
-UI_logs/*
-!UI_logs/
+UI_logs/
