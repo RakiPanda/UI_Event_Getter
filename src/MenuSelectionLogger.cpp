@@ -25,7 +25,7 @@ MenuSelectionLogger::~MenuSelectionLogger() {
     Stop();
 }
 
-LRESULT CALLBACK MenuSelectionLogger::MenuProc(int nCode, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK MenuSelectionLogger::CallWndProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION) {
         CWPSTRUCT* pCwp = (CWPSTRUCT*)lParam;
 
@@ -47,9 +47,9 @@ LRESULT CALLBACK MenuSelectionLogger::MenuProc(int nCode, WPARAM wParam, LPARAM 
 }
 
 void MenuSelectionLogger::Start() {
-    hMenuHook = SetWindowsHookEx(WH_CALLWNDPROC, MenuProc, NULL, 0);
+    hMenuHook = SetWindowsHookEx(WH_CALLWNDPROC, CallWndProc, NULL, GetCurrentThreadId());
     if (hMenuHook == NULL) {
-        std::cerr << "Failed to install menu hook!" << std::endl;
+        std::cerr << "Failed to install menu hook! Error: " << GetLastError() << std::endl;
         return;
     }
 
