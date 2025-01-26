@@ -114,19 +114,19 @@ LRESULT CALLBACK UnifiedLoggers::MenuProc(int nCode, WPARAM wParam, LPARAM lPara
 void UnifiedLoggers::Start() {
     hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseProc, NULL, 0);
     if (hMouseHook == NULL) {
-        std::cerr << "Failed to install mouse hook!" << std::endl;
+        std::cerr << "Failed to install mouse hook! Error: " << GetLastError() << std::endl;
         return;
     }
 
     hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
     if (hKeyboardHook == NULL) {
-        std::cerr << "Failed to install keyboard hook!" << std::endl;
+        std::cerr << "Failed to install keyboard hook! Error: " << GetLastError() << std::endl;
         return;
     }
 
     hMenuHook = SetWindowsHookEx(WH_CALLWNDPROC, MenuProc, NULL, 0); // 追加
     if (hMenuHook == NULL) {
-        std::cerr << "Failed to install menu hook!" << std::endl;
+        std::cerr << "Failed to install menu hook! Error: " << GetLastError() << std::endl;
         return;
     }
 
