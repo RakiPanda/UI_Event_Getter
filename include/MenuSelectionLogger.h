@@ -13,7 +13,7 @@ public:
     void Stop();
 
 private:
-    static LRESULT CALLBACK MenuProc(int nCode, WPARAM wParam, LPARAM lParam);
+    static LRESULT CALLBACK CallWndProc(int nCode, WPARAM wParam, LPARAM lParam);
     static HHOOK hMenuHook;
     static std::ofstream logFile;
     static std::chrono::time_point<std::chrono::steady_clock> startTime;
