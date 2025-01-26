@@ -1,7 +1,6 @@
 #include "UnifiedLoggers.h"
 #include "MouseMiddleClickLogger.h"
 #include "KeyboardLogger.h"
-#include "ForegroundWindowLogger.h"
 #include "WindowMessageLogger.h" // 追加
 #include <iostream>
 #include <filesystem>
