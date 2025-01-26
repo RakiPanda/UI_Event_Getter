@@ -57,6 +57,7 @@ void WindowMessageLogger::Start() {
 
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0)) {
+        std::cout << "Message received: " << msg.message << std::endl; // デバッグ用出力
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
