@@ -7,6 +7,8 @@
 int main() {
     if (!IsRunningAsAdmin()) {
         std::cerr << "This program must be run as an administrator." << std::endl;
+        std::cout << "Press Enter to stop logging..." << std::endl;
+        std::cin.get();
         return 1;
     }
 
