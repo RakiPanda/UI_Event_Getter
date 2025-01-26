@@ -45,10 +45,14 @@ LRESULT CALLBACK WindowMessageLogger::CallWndProc(int nCode, WPARAM wParam, LPAR
 }
 
 void WindowMessageLogger::Start() {
-    hCallWndProcHook = SetWindowsHookExA(WH_CALLWNDPROC, CallWndProc, NULL, GetCurrentThreadId());
+    DWORD threadId = GetCurrentThreadId();
+    hCallWndProcHook = SetWindowsHookExA(WH_CALLWNDPROC, CallWndProc, NULL, threadId);
     if (hCallWndProcHook == NULL) {
         std::cerr << "Failed to install CallWndProc hook! Error: " << GetLastError() << std::endl;
         return;
+    }
+    else{
+        std::cout << "Window Message Logger is running..." << std::endl;
     }
 
     MSG msg;
