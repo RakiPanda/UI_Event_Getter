@@ -1,13 +1,14 @@
 #include "UnifiedLoggers.h"
-#include "MouseMiddleClickLogger.h" // 追加
-#include "KeyboardLogger.h" // 追加
+#include "MouseMiddleClickLogger.h"
+#include "KeyboardLogger.h"
 #include <iostream>
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
+#include <map>
 
 HHOOK UnifiedLoggers::hMouseHook = NULL;
-HHOOK UnifiedLoggers::hKeyboardHook = NULL; // 追加
+HHOOK UnifiedLoggers::hKeyboardHook = NULL;
 std::ofstream UnifiedLoggers::logFile;
 std::chrono::time_point<std::chrono::steady_clock> UnifiedLoggers::startTime;
 
@@ -62,7 +63,7 @@ LRESULT CALLBACK UnifiedLoggers::MouseProc(int nCode, WPARAM wParam, LPARAM lPar
     return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
 }
 
-LRESULT CALLBACK UnifiedLoggers::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) { // 追加
+LRESULT CALLBACK UnifiedLoggers::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
     if (nCode == HC_ACTION && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN)) {
         KBDLLHOOKSTRUCT* pKeyboard = (KBDLLHOOKSTRUCT*)lParam;
 
@@ -70,7 +71,13 @@ LRESULT CALLBACK UnifiedLoggers::KeyboardProc(int nCode, WPARAM wParam, LPARAM l
         auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - startTime).count();
 
         std::stringstream logStream;
-        logStream << "Key Pressed: " << pKeyboard->vkCode << ", Elapsed Time: " << elapsed << " ms";
+        logStream << "Key Pressed: " << pKeyboard->vkCode;
+
+        if (keyMap.find(pKeyboard->vkCode) != keyMap.end()) {
+            logStream << " (" << keyMap[pKeyboard->vkCode] << ")";
+        }
+
+        logStream << ", Elapsed Time: " << elapsed << " ms";
 
         std::cout << logStream.str() << std::endl;
 
@@ -88,7 +95,7 @@ void UnifiedLoggers::Start() {
         return;
     }
 
-    hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0); // 追加
+    hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, NULL, 0);
     if (hKeyboardHook == NULL) {
         std::cerr << "Failed to install keyboard hook!" << std::endl;
         return;
@@ -106,7 +113,7 @@ void UnifiedLoggers::Stop() {
         UnhookWindowsHookEx(hMouseHook);
         hMouseHook = NULL;
     }
-    if (hKeyboardHook) { // 追加
+    if (hKeyboardHook) {
         UnhookWindowsHookEx(hKeyboardHook);
         hKeyboardHook = NULL;
     }
