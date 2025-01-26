@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <windows.h>
-#include "UnifiedLoggers.h"
+#include "WindowMessageLogger.h"
 #include "Utils.h" // 追加
 
 int main() {
@@ -10,8 +10,8 @@ int main() {
         return 1;
     }
 
-    // UnifiedLoggersインスタンスを作成
-    UnifiedLoggers logger;
+    // WindowMessageLoggerインスタンスを作成
+    WindowMessageLogger logger;
 
     // フックを実行するスレッドを開始
     std::thread hookThread([&logger]() {

@@ -1,11 +1,14 @@
 #include "UnifiedLoggers.h"
 #include "MouseMiddleClickLogger.h"
 #include "KeyboardLogger.h"
+#include "ForegroundWindowLogger.h"
+#include "WindowMessageLogger.h" // 追加
 #include <iostream>
 #include <filesystem>
 #include <iomanip>
 #include <sstream>
 #include <map>
+#include <thread>
 
 HHOOK UnifiedLoggers::hMouseHook = NULL;
 HHOOK UnifiedLoggers::hKeyboardHook = NULL;
@@ -101,11 +104,29 @@ void UnifiedLoggers::Start() {
         return;
     }
 
+    ForegroundWindowLogger foregroundLogger;
+    std::thread foregroundThread([&foregroundLogger]() {
+        foregroundLogger.Start();
+    });
+
+    WindowMessageLogger windowMessageLogger; // 追加
+    std::thread windowMessageThread([&windowMessageLogger]() { // 追加
+        windowMessageLogger.Start(); // 追加
+    }); // 追加
+
     MSG msg;
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+
+    if (foregroundThread.joinable()) {
+        foregroundThread.join();
+    }
+
+    if (windowMessageThread.joinable()) { // 追加
+        windowMessageThread.join(); // 追加
+    } // 追加
 }
 
 void UnifiedLoggers::Stop() {
