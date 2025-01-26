@@ -124,7 +124,7 @@ void UnifiedLoggers::Start() {
         return;
     }
 
-    hMenuHook = SetWindowsHookEx(WH_CALLWNDPROC, MenuProc, NULL, 0); // 追加
+    hMenuHook = SetWindowsHookEx(WH_CALLWNDPROC, MenuProc, NULL, GetCurrentThreadId()); // 追加
     if (hMenuHook == NULL) {
         std::cerr << "Failed to install menu hook! Error: " << GetLastError() << std::endl;
         return;
