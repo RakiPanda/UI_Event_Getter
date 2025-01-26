@@ -26,8 +26,19 @@ std::map<int, std::string> keyMap = {
     {VK_SUBTRACT, "Numpad -"}, {VK_DECIMAL, "Numpad ."}, {VK_DIVIDE, "Numpad /"}, {VK_F1, "F1"},
     {VK_F2, "F2"}, {VK_F3, "F3"}, {VK_F4, "F4"}, {VK_F5, "F5"}, {VK_F6, "F6"},
     {VK_F7, "F7"}, {VK_F8, "F8"}, {VK_F9, "F9"}, {VK_F10, "F10"}, {VK_F11, "F11"},
-    {VK_F12, "F12"}, {VK_NUMLOCK, "Num Lock"}, {VK_SCROLL, "Scroll Lock"}
-    // 必要に応じて他のキーも追加
+    {VK_F12, "F12"}, {VK_NUMLOCK, "Num Lock"}, {VK_SCROLL, "Scroll Lock"},
+    {VK_LSHIFT, "Left Shift"}, {VK_RSHIFT, "Right Shift"}, {VK_LCONTROL, "Left Ctrl"}, {VK_RCONTROL, "Right Ctrl"},
+    {VK_LMENU, "Left Alt"}, {VK_RMENU, "Right Alt"}, {VK_LWIN, "Left Win"}, {VK_RWIN, "Right Win"},
+    {VK_APPS, "Apps"}, {VK_SLEEP, "Sleep"}, {VK_VOLUME_MUTE, "Volume Mute"}, {VK_VOLUME_DOWN, "Volume Down"},
+    {VK_VOLUME_UP, "Volume Up"}, {VK_MEDIA_NEXT_TRACK, "Next Track"}, {VK_MEDIA_PREV_TRACK, "Previous Track"},
+    {VK_MEDIA_STOP, "Stop"}, {VK_MEDIA_PLAY_PAUSE, "Play/Pause"}, {VK_LAUNCH_MAIL, "Launch Mail"},
+    {VK_LAUNCH_MEDIA_SELECT, "Launch Media Select"}, {VK_LAUNCH_APP1, "Launch App1"}, {VK_LAUNCH_APP2, "Launch App2"},
+    {VK_OEM_1, "OEM 1"}, {VK_OEM_PLUS, "OEM Plus"}, {VK_OEM_COMMA, "OEM Comma"}, {VK_OEM_MINUS, "OEM Minus"},
+    {VK_OEM_PERIOD, "OEM Period"}, {VK_OEM_2, "OEM 2"}, {VK_OEM_3, "OEM 3"}, {VK_OEM_4, "OEM 4"},
+    {VK_OEM_5, "OEM 5"}, {VK_OEM_6, "OEM 6"}, {VK_OEM_7, "OEM 7"}, {VK_OEM_8, "OEM 8"},
+    {VK_OEM_102, "OEM 102"}, {VK_PROCESSKEY, "Process Key"}, {VK_PACKET, "Packet"}, {VK_ATTN, "Attn"},
+    {VK_CRSEL, "CrSel"}, {VK_EXSEL, "ExSel"}, {VK_EREOF, "Erase EOF"}, {VK_PLAY, "Play"},
+    {VK_ZOOM, "Zoom"}, {VK_NONAME, "No Name"}, {VK_PA1, "PA1"}, {VK_OEM_CLEAR, "OEM Clear"}
 };
 
 KeyboardLogger::KeyboardLogger() {
