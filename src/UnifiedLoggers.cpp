@@ -1,4 +1,5 @@
 #include "UnifiedLoggers.h"
+#include "MouseMiddleClickLogger.h" // 追加
 #include <iostream>
 #include <filesystem>
 #include <iomanip>
@@ -45,6 +46,8 @@ LRESULT CALLBACK UnifiedLoggers::MouseProc(int nCode, WPARAM wParam, LPARAM lPar
         } else if (wParam == WM_MOUSEWHEEL) {
             int delta = GET_WHEEL_DELTA_WPARAM(pMouse->mouseData);
             logStream << "Mouse Wheel: Delta " << delta << " at (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms";
+        } else if (wParam == WM_MBUTTONDOWN) { // 追加
+            logStream << "Mouse Middle Click at (" << x << ", " << y << "), Elapsed Time: " << elapsed << " ms";
         }
 
         if (!logStream.str().empty()) {
