@@ -103,11 +103,6 @@ void UnifiedLoggers::Start() {
         return;
     }
 
-    ForegroundWindowLogger foregroundLogger;
-    std::thread foregroundThread([&foregroundLogger]() {
-        foregroundLogger.Start();
-    });
-
     WindowMessageLogger windowMessageLogger; // 追加
     std::thread windowMessageThread([&windowMessageLogger]() { // 追加
         windowMessageLogger.Start(); // 追加
@@ -117,10 +112,6 @@ void UnifiedLoggers::Start() {
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
-    }
-
-    if (foregroundThread.joinable()) {
-        foregroundThread.join();
     }
 
     if (windowMessageThread.joinable()) { // 追加
