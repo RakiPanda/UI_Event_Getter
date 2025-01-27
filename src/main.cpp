@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <windows.h>
-#include "KeyboardHook.h"
+#include "KeyboardHookDll.h"
 #include "Utils.h"
 
 int main() {
@@ -12,12 +12,9 @@ int main() {
         return 1;
     }
 
-    // KeyboardHookインスタンスを作成
-    KeyboardHook keyboardHook;
-
     // フックを実行するスレッドを開始
-    std::thread hookThread([&keyboardHook]() {
-        if (!keyboardHook.Set()) {
+    std::thread hookThread([]() {
+        if (!SetKeyboardHook()) {
             std::cerr << "Failed to set keyboard hook!" << std::endl;
             return;
         }
@@ -34,7 +31,7 @@ int main() {
     std::cin.get();
 
     // フックを停止して終了
-    keyboardHook.Release();
+    ReleaseKeyboardHook();
 
     // スレッドを切り離し
     if (hookThread.joinable()) {

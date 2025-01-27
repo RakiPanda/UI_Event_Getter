@@ -12,7 +12,7 @@ KeyboardHook::~KeyboardHook() {
 }
 
 BOOL KeyboardHook::Set() {
-    m_hHook = ::SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)KeyboardHook::KeyboardProc, NULL, 0);
+    m_hHook = ::SetWindowsHookEx(WH_KEYBOARD_LL, (HOOKPROC)KeyboardHook::KeyboardProc, GetModuleHandle(NULL), 0);
     if (!m_hHook) {
         std::cerr << "Failed to install keyboard hook! Error: " << GetLastError() << std::endl;
         return FALSE;
