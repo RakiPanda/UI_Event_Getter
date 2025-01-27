@@ -1,8 +1,8 @@
 #include <iostream>
 #include <thread>
 #include <windows.h>
-#include "WindowMessageLogger.h"
-#include "Utils.h" // 追加
+#include "KeyboardHook.h"
+#include "Utils.h"
 
 int main() {
     if (!IsRunningAsAdmin()) {
@@ -12,12 +12,21 @@ int main() {
         return 1;
     }
 
-    // WindowMessageLoggerインスタンスを作成
-    WindowMessageLogger logger;
+    // KeyboardHookインスタンスを作成
+    KeyboardHook keyboardHook;
 
     // フックを実行するスレッドを開始
-    std::thread hookThread([&logger]() {
-        logger.Start();
+    std::thread hookThread([&keyboardHook]() {
+        if (!keyboardHook.Set()) {
+            std::cerr << "Failed to set keyboard hook!" << std::endl;
+            return;
+        }
+
+        MSG msg;
+        while (GetMessage(&msg, NULL, 0, 0)) {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
     });
 
     // ユーザーが終了するまでプログラムを実行
@@ -25,7 +34,7 @@ int main() {
     std::cin.get();
 
     // フックを停止して終了
-    logger.Stop();
+    keyboardHook.Release();
 
     // スレッドを切り離し
     if (hookThread.joinable()) {
