@@ -3,6 +3,7 @@
 #include <windows.h>
 #include "Utils.h"
 
+HOOKPROC hkprcSysMsg;
 HHOOK hhookSysMsg = NULL;
 HINSTANCE hinstDLL = NULL;
 
@@ -24,8 +25,13 @@ int main() {
 
     // フックを実行するスレッドを開始
     std::thread hookThread([]() {
-        hinstDLL = LoadLibrary(TEXT("C:\\Windows\\System32\\sysmain.dll")); 
-        hhookSysMsg = SetWindowsHookEx(WH_SYSMSGFILTER, SysMessageProc, NULL, 0);
+        hinstDLL = LoadLibrary(TEXT("C:\\Windows\\System32\\user32.dll")); 
+        hkprcSysMsg = (HOOKPROC)GetProcAddress(hinstDLL, "SysMessageProc");
+        hhookSysMsg = SetWindowsHookEx( 
+                    WH_SYSMSGFILTER,
+                    hkprcSysMsg,
+                    hinstDLL,
+                    0);
         if (!hhookSysMsg) {
             std::cerr << "Failed to install sysmsg hook! Error: " << GetLastError() << std::endl;
             return;
