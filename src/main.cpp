@@ -1,8 +1,18 @@
 #include <iostream>
 #include <thread>
 #include <windows.h>
-#include "KeyboardHookDll.h"
 #include "Utils.h"
+
+HHOOK hhookSysMsg = NULL;
+HINSTANCE hinstDLL = NULL;
+
+LRESULT CALLBACK SysMessageProc(int nCode, WPARAM wParam, LPARAM lParam) {
+    if (nCode >= 0) {
+        MSG* msg = (MSG*)lParam;
+        std::cout << "SysMessage: " << msg->message << " wParam: " << msg->wParam << " lParam: " << msg->lParam << std::endl;
+    }
+    return CallNextHookEx(hhookSysMsg, nCode, wParam, lParam);
+}
 
 int main() {
     if (!IsRunningAsAdmin()) {
@@ -14,8 +24,10 @@ int main() {
 
     // フックを実行するスレッドを開始
     std::thread hookThread([]() {
-        if (!SetKeyboardHook()) {
-            std::cerr << "Failed to set keyboard hook!" << std::endl;
+        hinstDLL = LoadLibrary(TEXT("C:\\Windows\\System32\\sysmain.dll")); 
+        hhookSysMsg = SetWindowsHookEx(WH_SYSMSGFILTER, SysMessageProc, NULL, 0);
+        if (!hhookSysMsg) {
+            std::cerr << "Failed to install sysmsg hook! Error: " << GetLastError() << std::endl;
             return;
         }
 
@@ -31,7 +43,10 @@ int main() {
     std::cin.get();
 
     // フックを停止して終了
-    ReleaseKeyboardHook();
+    if (hhookSysMsg) {
+        UnhookWindowsHookEx(hhookSysMsg);
+        hhookSysMsg = NULL;
+    }
 
     // スレッドを切り離し
     if (hookThread.joinable()) {
